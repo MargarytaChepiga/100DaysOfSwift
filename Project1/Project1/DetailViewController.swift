@@ -15,12 +15,12 @@ class DetailViewController: UIViewController {
     var selectedImage: String?
     var selectedImageCount = 0
     var totalAmountOfImages = 0
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
         title = "Picture \(selectedImageCount + 1) of \(totalAmountOfImages)"
-        
+       
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
 
         
