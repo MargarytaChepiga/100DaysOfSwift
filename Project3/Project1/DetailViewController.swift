@@ -21,9 +21,8 @@ class DetailViewController: UIViewController {
         
         title = "Picture \(selectedImageCount + 1) of \(totalAmountOfImages)"
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .  action, target: self, action: #selector(shareTapped))
 
-        
         navigationItem.largeTitleDisplayMode = .never
 
 
@@ -50,10 +49,11 @@ class DetailViewController: UIViewController {
             return
         }
         
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: [image, selectedImage!], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
+
     /*
     // MARK: - Navigation
 

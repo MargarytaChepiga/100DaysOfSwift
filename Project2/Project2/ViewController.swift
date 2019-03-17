@@ -21,7 +21,6 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
         
         // Declare an array of contries
         countries += ["canada", "estonia", "france", "germany", "ireland", "italy", "kazakhstan", "monaco", "nigeria", "poland", "russia", "spain", "uk", "ukraine", "us"]
@@ -59,11 +58,13 @@ class ViewController: UIViewController {
         title = countries[correctAnswer].uppercased() + " " + "- SCORE: \(score)"
         
     }
+    
     // IBAaction is a way of making storyboard layouts trigger code
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
         
-        // keep track of correct & wrong answers
+        // keep track of correct & wrong answers, as well as how many times
+        // the question have been asked
         if sender.tag == correctAnswer {
             title = "Correct"
             score += 1
@@ -75,18 +76,22 @@ class ViewController: UIViewController {
         }
         
        
-        // Keep track of how many question the user have answered
+        // 1 round is 3 questions
         if timesAsked == 3  {
+            // Once user have answered 3 times,
             // show alert message with the final score
             let acon = UIAlertController(title: "Final Score", message: "Your final score is \(score).", preferredStyle: .alert)
             acon.addAction(UIAlertAction(title: "Start Over", style: .destructive, handler: askQuestion))
             present(acon, animated: true)
+            // Clean the score & round
             score = 0
             timesAsked = 0
             
         }
         
+        // If the answer is incorrect
         if title == "Wrong" {
+            // show alert with the correct answer
             let wrongAns = UIAlertController(title: title, message: "That's the flag of \(countries[sender.tag].uppercased())", preferredStyle: .alert)
             wrongAns.addAction(UIAlertAction(title: "Try Again", style: .default, handler: askQuestion))
             present(wrongAns, animated: true)
