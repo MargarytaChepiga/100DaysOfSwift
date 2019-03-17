@@ -22,6 +22,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(shareTapped))
+
         // Declare an array of contries
         countries += ["canada", "estonia", "france", "germany", "ireland", "italy", "kazakhstan", "monaco", "nigeria", "poland", "russia", "spain", "uk", "ukraine", "us"]
         
@@ -109,8 +111,18 @@ class ViewController: UIViewController {
         
         present(ac, animated: true)
         
-
     }
     
+     @IBAction func shareTapped() {
+        guard let image = button1.currentImage else {
+            print("No image found")
+            return
+        }
+        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(vc, animated: true)
+    }
+    
+   
 }
 
