@@ -114,11 +114,7 @@ class ViewController: UIViewController {
     }
     
      @IBAction func shareTapped() {
-        guard let image = button1.currentImage else {
-            print("No image found")
-            return
-        }
-        let vc = UIActivityViewController(activityItems: [image], applicationActivities: [])
+        let vc = UIActivityViewController(activityItems: ["\(score)"], applicationActivities: [])
         vc.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
         present(vc, animated: true)
     }
