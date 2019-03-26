@@ -15,3 +15,6 @@ This application is created to demonstrate the knowledge of:
 - UIColor
 - UIAlertController
 
+#### Screenshots
+
+#### Gif
