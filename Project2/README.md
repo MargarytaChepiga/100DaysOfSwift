@@ -9,6 +9,7 @@ This application is created to demonstrate the knowledge of:
 - UIKit
 - XCode StoryBoards & Auto Layout
 - Interface Builder
+- Outlets
 - Asset Catalogs
 - UIButton
 - CALayer
