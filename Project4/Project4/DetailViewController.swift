@@ -7,13 +7,19 @@
 //
 
 import UIKit
+// Importing WebKit framework in order to work with web views
 import WebKit
 
+// create a new subclass of UIViewController called DetailViewController, and tell the compiler that we promise we’re safe to use as a WKNavigationDelegate
 class DetailViewController: UIViewController, WKNavigationDelegate {
 
+    // Storing the web view as a property in order to reference to it later on
     var webView: WKWebView!
+    
     var progressView: UIProgressView!
+    // Store the name of the site that was selected on the previous screen
     var selectedWebsite: String?
+    
     var blockedWebsites = ["google.com"]
     var websites = ["apple.com", "hackingwithswift.com", "brave.com"]
 
@@ -21,12 +27,15 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
     override func loadView() {
         // creating an instance of web view property
         webView = WKWebView()
+        // when any web page navigation happens, please tell that to the current view controller
         webView.navigationDelegate = self
+        // make our view (the root view of the view controller) that web view
         view = webView
     }
     
     override func viewDidLoad() {
-
+         super.viewDidLoad()
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Open", style: .plain, target: self, action: #selector(openTapped))
 
         progressView = UIProgressView(progressViewStyle: .default)
@@ -45,11 +54,11 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
 
         
         // URL is a swift's way of storing the location of files
+        // PLEASE NOTE: Connection has to be SECURE
         let url = URL(string: "https://" + selectedWebsite!)!
         // create a new URLRequest object from the above url
         // assign it to our webView to load
         webView.load(URLRequest(url: url))
-        
         // enable a property on the web view that allows users to swipe from the left or right edge to move backward or forward in their web browsing
         webView.allowsBackForwardNavigationGestures = true
         
@@ -61,7 +70,6 @@ class DetailViewController: UIViewController, WKNavigationDelegate {
         for website in websites {
             ac.addAction(UIAlertAction(title: website, style: .default, handler: openPage))
         }
-        
         ac.addAction(UIAlertAction(title: "Cancel", style: .cancel))
         ac.popoverPresentationController?.barButtonItem = self.navigationItem.rightBarButtonItem
         present(ac, animated: true)
