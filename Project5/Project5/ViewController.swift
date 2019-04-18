@@ -19,6 +19,8 @@ class ViewController: UITableViewController {
         // created a new UIBarButtonItem using the "add" system item, and configured it to run a method called promptForAnswer() when tapped
         navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(promptForAnswer))
 
+        navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .refresh, target: self, action: #selector(startGame))
+        
         // create a String instance from the contents of a file at a particular path
         // use a built-in method of Bundle to find a file with words
         if let startWordsUrl = Bundle.main.url(forResource: "start", withExtension: "txt") {
@@ -38,7 +40,7 @@ class ViewController: UITableViewController {
         startGame()
     }
     
-    func startGame() {
+    @objc func startGame() {
         // sets our view controller's title to be a random word in the array, which will be the word the player has to find
         title = allWords.randomElement()
         // removes all values from the usedWords array, which we'll be using to store the player's answers so far
@@ -100,20 +102,19 @@ class ViewController: UITableViewController {
                 } else {
                     errorTitle = "Word not recognised"
                     errorMessage = "You can't just make them up, you know!"
+                    showErrorMessage(errTitle: errorTitle, errMessage: errorMessage)
                 }
             } else {
                 errorTitle = "Word used already"
                 errorMessage = "Be more original!"
+                showErrorMessage(errTitle: errorTitle, errMessage: errorMessage)
             }
         } else {
             guard let title = title?.lowercased() else { return }
             errorTitle = "Word not possible"
             errorMessage = "You can't spell that word from \(title)"
+            showErrorMessage(errTitle: errorTitle, errMessage: errorMessage)
         }
-        
-        let ac = UIAlertController(title: errorTitle, message: errorMessage, preferredStyle: .alert)
-        ac.addAction(UIAlertAction(title: "OK!", style: .default))
-        present(ac, animated: true)
         
     }
     
@@ -146,10 +147,16 @@ class ViewController: UITableViewController {
         let range = NSRange(location: 0, length: word.utf16.count)
         // returns another NSRange structure which tells us where the misspelling was found
         let misspelledRange = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
-        
+
         // return true if no mispelling were found
-        return misspelledRange.location == NSNotFound
+        return misspelledRange.location == NSNotFound && word.count >= 3 && !title!.starts(with: word)
     }
     
+    func showErrorMessage(errTitle: String, errMessage: String) {
+        
+        let ac = UIAlertController(title: errTitle, message: errMessage, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "OK!", style: .default))
+        present(ac, animated: true)
+    }
 }
 
