@@ -34,4 +34,5 @@ This application is created to demonstrate the knowledge of:
 #### Gif
 
 ![Apr-18-2019 23-46-53](https://user-images.githubusercontent.com/15698572/56404373-51b2bb00-6234-11e9-9de2-079c688ed28f.gif)
+
 ![Apr-18-2019 23-49-30](https://user-images.githubusercontent.com/15698572/56404435-b40bbb80-6234-11e9-9a54-9f4a9bb607c3.gif)
