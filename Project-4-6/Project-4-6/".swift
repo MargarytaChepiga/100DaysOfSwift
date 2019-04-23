@@ -19,27 +19,41 @@ class ViewController: UITableViewController {
         title = "Shopping List"
         
         navigationItem.rightBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .add, target: self, action: #selector(addShoppingListItem))
-        navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .refresh, target: self, action: #selector(cleanShoppingList))
+        navigationItem.leftBarButtonItem = UIBarButtonItem.init(barButtonSystemItem: .trash, target: self, action: #selector(cleanShoppingList))
         
     }
 
     @objc func addShoppingListItem() {
         
-        let ac = UIAlertController.init(title: "Add Item to the List", message: nil, preferredStyle: .alert)
+        let ac = UIAlertController.init(title: "Add new item", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
-        let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self, weak ac] action in guard let item = ac?.textFields?[0].text else { return }
+        let submitAction = UIAlertAction(title: "Add", style: .default) { [weak self, weak ac] action in guard let item = ac?.textFields?[0].text else { return }
             self?.submit(item)
         }
         
         ac.addAction(submitAction)
+        
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        
         present(ac, animated: true)
         
     }
     
     @objc func cleanShoppingList() {
-        shoppingList.removeAll()
-        tableView.reloadData()
+        
+        let ac = UIAlertController.init(title: "Are you sure you want to delete the entire list?", message: nil, preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Delete", style: .default, handler: {
+            [weak self] action in
+            self?.shoppingList.removeAll()
+            self?.tableView.reloadData()
+            
+        }))
+        ac.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        
+        present(ac, animated: true)
+   
     }
     
     func submit(_ item: String) {
