@@ -43,12 +43,12 @@ class ViewController: UITableViewController {
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return petitions.count
+        return filteredPetitions.count//petitions.count
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "myCell", for: indexPath)
-        let petition = petitions[indexPath.row]
+        let petition = filteredPetitions[indexPath.row]//petitions[indexPath.row]
         cell.textLabel?.text = petition.title
         cell.detailTextLabel?.text = petition.body
         return cell
@@ -59,13 +59,14 @@ class ViewController: UITableViewController {
         
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
+            filteredPetitions = petitions
             tableView.reloadData()
         }
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.detailItem = petitions[indexPath.row]
+        vc.detailItem = filteredPetitions[indexPath.row]//petitions[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -87,11 +88,48 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: "Enter a word you want to filter", message: nil, preferredStyle: .alert)
         ac.addTextField()
         
-//        let submitAction = UIAlertAction(title: "Submit", style: .default, handler: { alert -> Void in
-//
-//        })
-        
+        let submitAction = UIAlertAction(title: "Submit", style: .default) { [weak self, weak ac] action in
+            guard let searchString = ac?.textFields?[0].text else { return }
+            self?.submit(searchString)
+        }
+        ac.addAction(submitAction)
         present(ac, animated: true)
+    }
+    
+    func submit(_ searchString: String) {
+        
+        filteredPetitions.removeAll(keepingCapacity: true)
+        print("Before: ")
+        print(filteredPetitions.count)
+        
+        for petition in petitions {
+            if petition.title.contains(searchString) || petition.body.contains(searchString) {
+                
+                filteredPetitions.append(petition)
+                print(filteredPetitions.count)
+                tableView.reloadData()
+
+            }
+        }
+        
+        print("After: ")
+        print(filteredPetitions.count)
+       
+        if filteredPetitions.count == 0 {
+            
+            let ac = UIAlertController(title: "No match found", message: "Please try another keyword", preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok!", style: .cancel))
+            present(ac, animated: true)
+            
+            tableView.reloadData()
+        }
+        
+        if searchString == "" {
+            filteredPetitions = petitions
+            tableView.reloadData()
+            
+        }
+        
     }
     
 }
