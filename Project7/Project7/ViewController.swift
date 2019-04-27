@@ -98,25 +98,28 @@ class ViewController: UITableViewController {
     
     func submit(_ searchString: String) {
         
+        // to show only those petitions that match the user provided string
         filteredPetitions.removeAll(keepingCapacity: true)
         
+        // loop through all the petitions
         for petition in petitions {
+            // if the provided string was found
             if petition.title.contains(searchString) || petition.body.contains(searchString) {
-                
+                // then add the petition to the array aka display it
                 filteredPetitions.append(petition)
                 tableView.reloadData()
 
             }
         }
        
+        // if search word was not found, show empty table and an alert
         if filteredPetitions.count == 0 {
-            
             let ac = UIAlertController(title: "No match found", message: "Please try another keyword", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok!", style: .cancel))
             present(ac, animated: true)
             tableView.reloadData()
         }
-        
+        // if user does not provide a string, show all the petitions
         if searchString == "" {
             filteredPetitions = petitions
             tableView.reloadData()
