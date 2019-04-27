@@ -27,6 +27,22 @@ class ViewController: UIViewController {
         scoreLabel.text = "Score: 0"
         view.addSubview(scoreLabel)
         
+        cluesLabel = UILabel()
+        cluesLabel.translatesAutoresizingMaskIntoConstraints = false
+        cluesLabel.font = UIFont.systemFont(ofSize: 24)
+        cluesLabel.text = "Clues"
+        // 0 means as many lines as it takes
+        cluesLabel.numberOfLines = 0
+        view.addSubview(cluesLabel)
+        
+        answersLabel = UILabel()
+        answersLabel.translatesAutoresizingMaskIntoConstraints = false
+        answersLabel.font = UIFont.systemFont(ofSize: 24)
+        answersLabel.text = "Answer"
+        answersLabel.numberOfLines = 0
+        answersLabel.textAlignment = .right
+        view.addSubview(answersLabel)
+        
         // get all the constraint and activate them all at once
         NSLayoutConstraint.activate([
             // layoutmarginsGuide is used to add a distance from the edge of the screen
