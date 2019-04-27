@@ -21,7 +21,7 @@ class ViewController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(filter))
         
         let urlString: String
-        
+        // check whether we want to display the most recent or top rated
         if navigationController?.tabBarItem.tag == 0 {
             urlString = "https://www.hackingwithswift.com/samples/petitions-1.json"
         } else {
@@ -66,7 +66,7 @@ class ViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let vc = DetailViewController()
-        vc.detailItem = filteredPetitions[indexPath.row]//petitions[indexPath.row]
+        vc.detailItem = filteredPetitions[indexPath.row]
         navigationController?.pushViewController(vc, animated: true)
     }
     
@@ -99,28 +99,21 @@ class ViewController: UITableViewController {
     func submit(_ searchString: String) {
         
         filteredPetitions.removeAll(keepingCapacity: true)
-        print("Before: ")
-        print(filteredPetitions.count)
         
         for petition in petitions {
             if petition.title.contains(searchString) || petition.body.contains(searchString) {
                 
                 filteredPetitions.append(petition)
-                print(filteredPetitions.count)
                 tableView.reloadData()
 
             }
         }
-        
-        print("After: ")
-        print(filteredPetitions.count)
        
         if filteredPetitions.count == 0 {
             
             let ac = UIAlertController(title: "No match found", message: "Please try another keyword", preferredStyle: .alert)
             ac.addAction(UIAlertAction(title: "Ok!", style: .cancel))
             present(ac, animated: true)
-            
             tableView.reloadData()
         }
         
