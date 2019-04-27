@@ -48,8 +48,20 @@ class ViewController: UIViewController {
             // layoutmarginsGuide is used to add a distance from the edge of the screen
             scoreLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor),
             scoreLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor),
-            
-            // more constraints to be added here!
+            // pin the top of the clues label to the bottom of the score label
+            cluesLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
+            // pin the leading edge of the clues label to the leading edge of our layout margins, adding 100 for some space
+            cluesLabel.leadingAnchor.constraint(equalTo: view.layoutMarginsGuide.leadingAnchor, constant: 100),
+            // make the clues label 60% of the width of our layout margins, minus 100
+            cluesLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.6, constant: -100),
+            // also pin the top of the answers label to the bottom of the score label
+            answersLabel.topAnchor.constraint(equalTo: scoreLabel.bottomAnchor),
+            // make the answers label stick to the trailing edge of our layout margins, minus 100
+            answersLabel.trailingAnchor.constraint(equalTo: view.layoutMarginsGuide.trailingAnchor, constant: -100),
+            // make the answers label take up 40% of the available space, minus 100
+            answersLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
+            // make the answers label match the height of the clues label
+            answersLabel.heightAnchor.constraint(equalTo: scoreLabel.heightAnchor)
             ])
     }
     
