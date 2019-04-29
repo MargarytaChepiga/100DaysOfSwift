@@ -105,11 +105,22 @@ class ViewController: UIViewController {
              // set the clear button on the center of the view and add 70 to place it on the right side
             clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 70),
             // set the height of the button to be exactly 44 points as recommended by Apple interface guidelines
-            clear.heightAnchor.constraint(equalToConstant: 44)
+            clear.heightAnchor.constraint(equalToConstant: 44),
+            // set the fixed width
+            buttonsView.widthAnchor.constraint(equalToConstant: 750),
+            // set the fixed height
+            buttonsView.heightAnchor.constraint(equalToConstant: 320),
+            // center horizontally
+            buttonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // pin to the bottom of submit button + 20 points for spacing
+            buttonsView.topAnchor.constraint(equalTo: submit.bottomAnchor, constant: 20),
+            // pin to the bottom of layout margin, but 20 points away from the screen edge
+            buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
             ])
         
-        //cluesLabel.backgroundColor = .red
-        //answersLabel.backgroundColor = .blue
+        cluesLabel.backgroundColor = .red
+        answersLabel.backgroundColor = .blue
+        buttonsView.backgroundColor = .green
         
     }
     
