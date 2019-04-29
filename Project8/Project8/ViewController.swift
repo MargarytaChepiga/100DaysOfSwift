@@ -12,7 +12,7 @@ class ViewController: UIViewController {
 
     var cluesLabel: UILabel!
     var answersLabel: UILabel!
-    var correctAnswer: UITextField!
+    var currentAnswer: UITextField!
     var scoreLabel: UILabel!
     var letterButtons = [UIButton]()
     
@@ -43,6 +43,27 @@ class ViewController: UIViewController {
         answersLabel.textAlignment = .right
         view.addSubview(answersLabel)
         
+        currentAnswer = UITextField()
+        currentAnswer.translatesAutoresizingMaskIntoConstraints = false
+        currentAnswer.placeholder = "Tap letters to guess"
+        currentAnswer.textAlignment = .center
+        currentAnswer.font = UIFont.systemFont(ofSize: 44)
+        currentAnswer.isUserInteractionEnabled = false
+        view.addSubview(currentAnswer)
+        
+        // buttons are created here and not in view controller, because there is no need to adjust them later
+        // create button with default button style
+        let submit = UIButton(type: .system)
+        submit.translatesAutoresizingMaskIntoConstraints = false
+        // set the title for the button
+        submit.setTitle("SUBMIT", for: .normal)
+        view.addSubview(submit)
+        
+        let clear = UIButton(type: .system)
+        clear.translatesAutoresizingMaskIntoConstraints = false
+        clear.setTitle("CLEAR", for: .normal)
+        view.addSubview(clear)
+        
         // get all the constraint and activate them all at once
         NSLayoutConstraint.activate([
             // layoutmarginsGuide is used to add a distance from the edge of the screen
@@ -61,8 +82,16 @@ class ViewController: UIViewController {
             // make the answers label take up 40% of the available space, minus 100
             answersLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
             // make the answers label match the height of the clues label
-            answersLabel.heightAnchor.constraint(equalTo: scoreLabel.heightAnchor)
+            answersLabel.heightAnchor.constraint(equalTo: scoreLabel.heightAnchor),
+            
+            currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
             ])
+        
+        //cluesLabel.backgroundColor = .red
+        //answersLabel.backgroundColor = .blue
+        
     }
     
     override func viewDidLoad() {
