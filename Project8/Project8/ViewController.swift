@@ -64,6 +64,11 @@ class ViewController: UIViewController {
         clear.setTitle("CLEAR", for: .normal)
         view.addSubview(clear)
         
+        // creating container view for the buttons
+        let buttonsView = UIView()
+        buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(buttonsView)
+        
         // get all the constraint and activate them all at once
         NSLayoutConstraint.activate([
             // layoutmarginsGuide is used to add a distance from the edge of the screen
