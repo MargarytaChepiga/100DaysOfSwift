@@ -83,9 +83,11 @@ class ViewController: UIViewController {
             answersLabel.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 0.4, constant: -100),
             // make the answers label match the height of the clues label
             answersLabel.heightAnchor.constraint(equalTo: scoreLabel.heightAnchor),
-            
+            // make the text field be at the center of the screen
             currentAnswer.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            // make the text field width to take up of 50% of the available space
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
+            // pin the top of text field to the bottom of the cluesLabel bottom
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
             ])
         
