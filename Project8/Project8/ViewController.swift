@@ -89,6 +89,18 @@ class ViewController: UIViewController {
             currentAnswer.widthAnchor.constraint(equalTo: view.widthAnchor, multiplier: 0.5),
             // pin the top of text field to the bottom of the cluesLabel bottom
             currentAnswer.topAnchor.constraint(equalTo: cluesLabel.bottomAnchor, constant: 20),
+            // make the submit button appear under the text field
+            submit.topAnchor.constraint(equalTo: currentAnswer.bottomAnchor),
+            // set the submit button on the center of the view and substruct 70 to place it on the left
+            submit.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: -70),
+            // set the height of the button to be exactly 44 points as recommended by Apple interface guidelines
+            submit.heightAnchor.constraint(equalToConstant: 44),
+            // make the clear button appear under the text field
+            clear.centerYAnchor.constraint(equalTo: submit.centerYAnchor),
+             // set the clear button on the center of the view and add 70 to place it on the right side
+            clear.centerXAnchor.constraint(equalTo: view.centerXAnchor, constant: 70),
+            // set the height of the button to be exactly 44 points as recommended by Apple interface guidelines
+            clear.heightAnchor.constraint(equalToConstant: 44)
             ])
         
         //cluesLabel.backgroundColor = .red
