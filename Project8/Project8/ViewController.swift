@@ -20,7 +20,14 @@ class ViewController: UIViewController {
     // all the possible solutions
     var solutions = [String]()
     // holds players score
-    var score = 0
+    var score = 0 {
+        // adding a property observer
+        // didSet executes the code, when the property has just been set
+        // as a result we update the score label whenever the score value was changed
+        didSet {
+            scoreLabel.text = "Score: \(score)"
+        }
+    }
     // holds current level
     var level = 1
     
