@@ -28,6 +28,7 @@ class ViewController: UIViewController {
         view.addSubview(scoreLabel)
         
         cluesLabel = UILabel()
+        cluesLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         cluesLabel.translatesAutoresizingMaskIntoConstraints = false
         cluesLabel.font = UIFont.systemFont(ofSize: 24)
         cluesLabel.text = "Clues"
@@ -36,6 +37,7 @@ class ViewController: UIViewController {
         view.addSubview(cluesLabel)
         
         answersLabel = UILabel()
+        answersLabel.setContentHuggingPriority(UILayoutPriority(1), for: .vertical)
         answersLabel.translatesAutoresizingMaskIntoConstraints = false
         answersLabel.font = UIFont.systemFont(ofSize: 24)
         answersLabel.text = "Answer"
@@ -118,10 +120,32 @@ class ViewController: UIViewController {
             buttonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: -20)
             ])
         
-        cluesLabel.backgroundColor = .red
-        answersLabel.backgroundColor = .blue
-        buttonsView.backgroundColor = .green
+        // set width and height for each button
+        let width = 150
+        let height = 80
         
+        for row in 0..<4 {
+            for col in 0..<5 {
+                
+                // create a new button and give it a big font size
+                let letterButton = UIButton(type: .system)
+                letterButton.titleLabel?.font = UIFont.systemFont(ofSize: 36)
+                
+                // give the button some temporary text so we can see it on-screen
+                letterButton.setTitle("WWW", for: .normal)
+                
+                // calculate the frame of this button using its column and row
+                let frame = CGRect(x: col * width, y: row * height, width: width, height: height)
+                letterButton.frame = frame
+                
+                // add it to the buttons view
+                buttonsView.addSubview(letterButton)
+                
+                // and also to our letterButtons array
+                letterButtons.append(letterButton)
+                
+            }
+        }
     }
     
     override func viewDidLoad() {
