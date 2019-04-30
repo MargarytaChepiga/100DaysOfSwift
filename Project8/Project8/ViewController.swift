@@ -30,6 +30,7 @@ class ViewController: UIViewController {
     }
     // holds current level
     var level = 1
+    var haveIansweredAll = [String]()
     
     override func loadView() {
         view = UIView()
@@ -87,6 +88,8 @@ class ViewController: UIViewController {
         // creating container view for the buttons
         let buttonsView = UIView()
         buttonsView.translatesAutoresizingMaskIntoConstraints = false
+        buttonsView.layer.borderWidth = 1
+        buttonsView.layer.borderColor = UIColor.lightGray.cgColor
         view.addSubview(buttonsView)
         
         
@@ -191,6 +194,7 @@ class ViewController: UIViewController {
     }
     
     @objc func submitTapped(_ sender: UIButton) {
+        
         // safely unwrapp, exit otherwise
         guard let answerText = currentAnswer.text else { return }
         // search through the solutions array for an item, if found stores the postion of it
@@ -205,13 +209,23 @@ class ViewController: UIViewController {
             currentAnswer.text = ""
             
             score += 1
+            haveIansweredAll.removeLast()
             
-            if score % 7 == 0 {
+            if haveIansweredAll.count == 0 {
                 let ac = UIAlertController(title: "Well done!", message: "Are you ready for the next level?", preferredStyle: .alert)
                 ac.addAction(UIAlertAction(title: "Let's go!", style: .default, handler: levelUp))
                 present(ac, animated: true)
             }
             
+        } else {
+            let ac = UIAlertController(title: "Sorry, try again!", message: nil, preferredStyle: .alert)
+            ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+            present(ac, animated: true)
+            currentAnswer.text = ""
+            for btn in activatedButtons {
+                btn.isHidden = false
+            }
+            score -= 1
         }
         
     }
@@ -255,6 +269,7 @@ class ViewController: UIViewController {
                     let solutionWord = answer.replacingOccurrences(of: "|", with: "")
                     solutionString += "\(solutionWord.count) letters\n"
                     solutions.append(solutionWord)
+                    haveIansweredAll = solutions
                     
                     let bits = answer.components(separatedBy: "|")
                     letterBits += bits
@@ -280,6 +295,7 @@ class ViewController: UIViewController {
     func levelUp(action: UIAlertAction) {
         
         level += 1
+        score = 0
         solutions.removeAll(keepingCapacity: true)
         loadLevel()
         
@@ -291,4 +307,3 @@ class ViewController: UIViewController {
     
     
 }
-
