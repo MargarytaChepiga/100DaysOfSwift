@@ -19,17 +19,7 @@ class ViewController: UITableViewController {
         
         navigationController?.navigationBar.prefersLargeTitles = true
 
-        // Do any additional setup after loading the view, typically from a nib.
-        let fm = FileManager.default
-        let path = Bundle.main.resourcePath!
-        let items = try! fm.contentsOfDirectory(atPath: path)
-        
-        for item in items {
-            if item.hasPrefix("nssl") {
-                // this is a picture to load!
-                pictures.append(item)
-            }
-        }
+        performSelector(inBackground: #selector(loadPictures), with: nil)
         
         print(pictures.sort())
 
@@ -64,6 +54,21 @@ class ViewController: UITableViewController {
         }
     }
     
+    @objc func loadPictures() {
+        // Do any additional setup after loading the view, typically from a nib.
+        let fm = FileManager.default
+        let path = Bundle.main.resourcePath!
+        let items = try! fm.contentsOfDirectory(atPath: path)
+        
+        for item in items {
+            if item.hasPrefix("nssl") {
+                // this is a picture to load!
+                pictures.append(item)
+            }
+        }
+        
+        tableView.performSelector(onMainThread: #selector(tableView.reloadData), with: nil, waitUntilDone: false)
+    }
     
 
 }
