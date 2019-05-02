@@ -19,7 +19,12 @@ class ViewController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Credits", style: .plain, target: self, action: #selector(showCredits))
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .search, target: self, action: #selector(filter))
+
+        performSelector(inBackground: #selector(fetchJSON), with: nil)
         
+    }
+    
+    @objc func fetchJSON() {
         let urlString: String
         // check whether we want to display the most recent or top rated
         if navigationController?.tabBarItem.tag == 0 {
@@ -27,20 +32,17 @@ class ViewController: UITableViewController {
         } else {
             urlString = "https://www.hackingwithswift.com/samples/petitions-2.json"
         }
-       
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            if let url = URL(string: urlString) {
-                if let data = try? Data(contentsOf: url) {
-                    // we're OK to parse!
-                    self?.parse(json: data)
-                } else {
-                    self?.showError()
-                }
+
+        if let url = URL(string: urlString) {
+            if let data = try? Data(contentsOf: url) {
+                // we're OK to parse!
+                parse(json: data)
             } else {
-                self?.showError()
+                performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
             }
+        } else {
+            performSelector(onMainThread: #selector(showError), with: nil, waitUntilDone: false)
         }
-        
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -61,9 +63,8 @@ class ViewController: UITableViewController {
         if let jsonPetitions = try? decoder.decode(Petitions.self, from: json) {
             petitions = jsonPetitions.results
             filteredPetitions = petitions
-            DispatchQueue.main.async { [weak self] in
-                self?.tableView.reloadData()
-            }
+            //tableView.reloadData()
+            tableView.performSelector(onMainThread: #selector(UITableView.reloadData), with: nil, waitUntilDone: false)
         }
     }
     
@@ -73,12 +74,10 @@ class ViewController: UITableViewController {
         navigationController?.pushViewController(vc, animated: true)
     }
     
-    func showError() {
-        DispatchQueue.main.async { [weak self] in
-            let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
-            self?.present(ac, animated: true)
-        }
+    @objc func showError() {
+        let ac = UIAlertController(title: "Loading error", message: "There was a problem loading the feed; please check your connection and try again.", preferredStyle: .alert)
+        ac.addAction(UIAlertAction(title: "Ok", style: .cancel))
+        present(ac, animated: true)
     }
     
     @objc func showCredits() {
@@ -103,31 +102,42 @@ class ViewController: UITableViewController {
     
     func submit(_ searchString: String) {
         
-        // to show only those petitions that match the user provided string
-        filteredPetitions.removeAll(keepingCapacity: true)
-        
-        // loop through all the petitions
-        for petition in petitions {
-            // if the provided string was found
-            if petition.title.contains(searchString) || petition.body.contains(searchString) {
-                // then add the petition to the array aka display it
-                filteredPetitions.append(petition)
-                tableView.reloadData()
-
+        DispatchQueue.global(qos: .background).async { [weak self] in
+            // to show only those petitions that match the user provided string
+            self?.filteredPetitions.removeAll(keepingCapacity: true)
+            
+            // loop through all the petitions
+            for petition in self!.petitions {
+                // if the provided string was found
+                if petition.title.contains(searchString) || petition.body.contains(searchString) {
+                    // then add the petition to the array aka display it
+                    self?.filteredPetitions.append(petition)
+                    DispatchQueue.main.async { [weak self] in
+                        self?.tableView.reloadData()
+                    }
+                    
+                }
             }
-        }
-       
-        // if search word was not found, show empty table and an alert
-        if filteredPetitions.count == 0 {
-            let ac = UIAlertController(title: "No match found", message: "Please try another keyword", preferredStyle: .alert)
-            ac.addAction(UIAlertAction(title: "Ok!", style: .cancel))
-            present(ac, animated: true)
-            tableView.reloadData()
-        }
-        // if user does not provide a string, show all the petitions
-        if searchString == "" {
-            filteredPetitions = petitions
-            tableView.reloadData()
+            
+            // if search word was not found, show empty table and an alert
+            if self?.filteredPetitions.count == 0 {
+                DispatchQueue.main.async { [weak self] in
+                    
+                    let ac = UIAlertController(title: "No match found", message: "Please try another keyword", preferredStyle: .alert)
+                    ac.addAction(UIAlertAction(title: "Ok!", style: .cancel))
+                    self?.present(ac, animated: true)
+                
+                    self?.tableView.reloadData()
+                }
+            }
+            // if user does not provide a string, show all the petitions
+            if searchString == "" {
+                self?.filteredPetitions = self!.petitions
+                DispatchQueue.main.async { [weak self] in
+                    self?.tableView.reloadData()
+                }
+                
+            }
             
         }
         
