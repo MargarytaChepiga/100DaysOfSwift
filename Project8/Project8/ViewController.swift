@@ -176,8 +176,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        loadLevel()
-    
+        //loadLevel()
+        performSelector(inBackground: #selector(loadLevel), with: nil)
     }
 
     @objc func letterTapped(_ sender: UIButton) {
@@ -241,7 +241,7 @@ class ViewController: UIViewController {
         activatedButtons.removeAll()
     }
     
-    func loadLevel() {
+    @objc func loadLevel() {
         // stores all level's clues
         var clueString = ""
         // stores how many letters each answer is (in the same position as the clues)
@@ -278,17 +278,20 @@ class ViewController: UIViewController {
             }
         }
         
-        cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
-        answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
-        
-        letterBits.shuffle()
-        
-        if letterBits.count == letterButtons.count {
-            //  looping from 0 to 19 (inclusive) means we can use the i variable to set a button to a letter group
-            for i in 0..<letterButtons.count {
-                letterButtons[i].setTitle(letterBits[i], for: .normal)
+        DispatchQueue.main.async { [weak self] in
+            self?.cluesLabel.text = clueString.trimmingCharacters(in: .whitespacesAndNewlines)
+            self?.answersLabel.text = solutionString.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            letterBits.shuffle()
+            
+            if letterBits.count == self?.letterButtons.count {
+                //  looping from 0 to 19 (inclusive) means we can use the i variable to set a button to a letter group
+                for i in 0..<self!.letterButtons.count {
+                    self?.letterButtons[i].setTitle(letterBits[i], for: .normal)
+                }
             }
         }
+
     }
     
     
@@ -304,6 +307,5 @@ class ViewController: UIViewController {
         }
         
     }
-    
     
 }
