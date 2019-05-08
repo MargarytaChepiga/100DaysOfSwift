@@ -9,39 +9,44 @@
 import UIKit
 
 class ViewController: UIViewController {
-    /*
-     
-     Things to do:
-     
-     - Create a modifieble UI label on top of the screen
-     - Display 26 letters
-     -
-     
-     
-    */
-    
+   
+    // letters in English alphabet
     let alphabet = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]
-    let wordsToSolve = ["SWIFT", "BRAVE", "PASSION", "MOTIVATION", "ABRAKADABRA"]
+    // list of words to solve
+    let wordsToSolve = ["SWIFT", "BRAVE", "PASSION", "MOTIVATION"]
+    // word to guess for one game / level
     var wordToGuess = ""
-    var hiddenWord = ""
+    // used to display the word to guess in a hidden way
+    var hiddenWord = "" {
+        didSet {
+            answerLabel.text = "\(hiddenWord)"
+        }
+    }
+    // used to keep track of score
+    var tryiesAmount = 7 {
+        didSet {
+            mistakesLabel.text = "Amount of tries left: \(tryiesAmount)"
+        }
+    }
     
-    var testWord = ""
-    
+    // display hidden word
     var answerLabel: UILabel!
+    // alphabet buttons
     var letterButtons = [UIButton]()
     
-    // store letters that are being in use to spell an answer
-    var activatedButtons = [UIButton]()
+    var mistakesLabel: UILabel!
+    
+    let widthHeight = 4
     
     override func loadView() {
         view = UIView()
         view.backgroundColor = .white
         
-        randomWord()
+        //randomWord()
         
         answerLabel = UILabel()
         answerLabel.translatesAutoresizingMaskIntoConstraints = false
-        answerLabel.text = hiddenWord
+        answerLabel.text = randomWord() //  hiddenWord
         answerLabel.font = UIFont.systemFont(ofSize: 32)
         view.addSubview(answerLabel)
         
@@ -49,10 +54,36 @@ class ViewController: UIViewController {
         letterButtonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(letterButtonsView)
         
-  
+        let lineImage = UIImageView(frame: CGRect(x: 100, y: 170, width: 9, height: 300))
+        lineImage.backgroundColor = UIColor.black
+        lineImage.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lineImage)
+        
+        let lineImage2 = UIImageView(frame: CGRect(x: 60, y: 470, width: 130, height: 10))
+        lineImage2.backgroundColor = UIColor.black
+        lineImage2.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lineImage2)
+        
+        let lineImage3 = UIImageView(frame: CGRect(x: 100, y: 170, width: 160, height: 8))
+        lineImage3.backgroundColor = UIColor.black
+        lineImage3.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lineImage3)
+        
+        let lineImage4 = UIImageView(frame: CGRect(x: 260, y: 170, width: 6, height: 30))
+        lineImage4.backgroundColor = UIColor.black
+        lineImage4.translatesAutoresizingMaskIntoConstraints = false
+        view.addSubview(lineImage4)
+        
+        mistakesLabel = UILabel()
+        mistakesLabel.translatesAutoresizingMaskIntoConstraints = false
+        mistakesLabel.text = "Amount of tries left: 7"
+        view.addSubview(mistakesLabel)
+        
+        drowLine(startX: 106, toEndingX: 152, startingY: 220, toEndingY: 176)
+        
         
         NSLayoutConstraint.activate([
-            answerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 15),
+            answerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 55),
             answerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       
             letterButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
@@ -60,6 +91,8 @@ class ViewController: UIViewController {
             letterButtonsView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1),
             letterButtonsView.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.4),
             
+            mistakesLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 15),
+            mistakesLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor, constant: 0)
         ])
         
         // Create 26 letter buttons
@@ -92,30 +125,32 @@ class ViewController: UIViewController {
         letterButtonsView.addSubview(letter)
         letter.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
         
-        //answerLabel.backgroundColor = UIColor.red
-        //letterButtonsView.backgroundColor = UIColor.green
-       
-        
+//        answerLabel.backgroundColor = UIColor.red
+//        letterButtonsView.backgroundColor = UIColor.green
+//        image.backgroundColor = UIColor.blue
+
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
-        nameTheButtons()
+        //nameTheButtons()
+        loadGame()
+    
     }
 
-    func randomWord() {
+    func randomWord() -> String {
         wordToGuess = wordsToSolve.randomElement()!
         hiddenWord = wordToGuess
         hiddenWord.removeAll(keepingCapacity: true)
-        
-        testWord = wordToGuess
         
         print(wordToGuess)
         // hide the word
         for _ in 0..<wordToGuess.count {
             hiddenWord.append("?")
         }
+        
+        return hiddenWord
         
     }
     
@@ -142,14 +177,35 @@ class ViewController: UIViewController {
                 // modify the label text to be up to date
                 // consider adding property observer instead of this line
                 answerLabel.text = hiddenWord
+                sender.isHidden = true
             }
         }
         
-        sender.isHidden = true
+        if !wordToGuess.contains(buttonTitle) {
+           
+            tryiesAmount -= 1
+            scoreCheck()
+          
+            sender.isHidden = true
+            
+            if tryiesAmount <= 1 {
+                
+                let ac = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
+                ac.addAction(UIAlertAction(title: "Try Again!", style: .cancel, handler: nil))
+                present(ac, animated: true)
+                
+                loadGame()
+            }
+            
+        }
         
     }
     
     func nameTheButtons() {
+        
+        for btn in letterButtons {
+            btn.isHidden = false
+        }
         
         for button in 0..<letterButtons.count {
             letterButtons[button].setTitle(alphabet[button], for: .normal)
@@ -157,6 +213,70 @@ class ViewController: UIViewController {
         
     }
     
+    func scoreCheck() {
+        
+        switch tryiesAmount {
+        case 6:
+            let circlePath = UIBezierPath(arcCenter: CGPoint(x: 263,y: 222), radius: CGFloat(24), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
+            
+                    let shapeLayer = CAShapeLayer()
+                    shapeLayer.path = circlePath.cgPath
+            
+                    //change the fill color
+                    shapeLayer.fillColor = UIColor.clear.cgColor
+                    //you can change the stroke color
+                    shapeLayer.strokeColor = UIColor.black.cgColor
+                    //you can change the line width
+                    shapeLayer.lineWidth = 4.0
+            
+                view.layer.addSublayer(shapeLayer)
+        case 5:
+            drowLine(startX: 261, toEndingX: 261, startingY: 244, toEndingY: 344)
+        case 4:
+            drowLine(startX: 261, toEndingX: 231, startingY: 265, toEndingY: 310)
+        case 3:
+            drowLine(startX: 262, toEndingX: 295, startingY: 265, toEndingY: 310)
+        case 2:
+            drowLine(startX: 261, toEndingX: 235, startingY: 343, toEndingY: 425)
+        case 1:
+            drowLine(startX: 262, toEndingX: 291, startingY: 343, toEndingY: 425)
+        default:
+            print("Do nothin")
+        }
+        
+        
+    }
+    
+    func drowLine(startX: Int, toEndingX endX: Int, startingY startY: Int, toEndingY endY: Int) {
+        
+        let path = UIBezierPath()
+        path.move(to: CGPoint(x: startX, y: startY))
+        path.addLine(to: CGPoint(x: endX, y: endY))
+        
+        let shapeLayer = CAShapeLayer()
+        shapeLayer.path = path.cgPath
+        shapeLayer.strokeColor = UIColor.black.cgColor
+        shapeLayer.lineWidth = 4.0
+        
+        view.layer.addSublayer(shapeLayer)
+    }
 
+    func loadGame() {
+        
+        tryiesAmount = 7
+        nameTheButtons()
+        answerLabel.text = randomWord()
+        
+        print(view.layer.sublayers!.count)
+        
+        if view.layer.sublayers!.count > 8 {
+            let allSubs = view.layer.sublayers
+            view.layer.sublayers = allSubs?.dropLast(6)
+        }
+        
+        print(view.layer.sublayers!.count)
+        
+    }
+    
 }
 
