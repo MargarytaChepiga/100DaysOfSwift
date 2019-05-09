@@ -22,19 +22,13 @@ class ViewController: UIViewController {
             answerLabel.text = "\(hiddenWord)"
         }
     }
-    // used to keep track of score
-    var tryiesAmount = 7 {
-        didSet {
-            mistakesLabel.text = "Amount of tries left: \(tryiesAmount)"
-        }
-    }
+    // used to keep track of amount of attemps the user have left
+    var tryiesAmount = 7
     
-    // display hidden word
+    // displays hidden word
     var answerLabel: UILabel!
-    // alphabet buttons
+    // displays alphabet buttons
     var letterButtons = [UIButton]()
-    
-    var mistakesLabel: UILabel!
     
     let widthHeight = 4
     
@@ -42,18 +36,18 @@ class ViewController: UIViewController {
         view = UIView()
         view.backgroundColor = .white
         
-        //randomWord()
-        
         answerLabel = UILabel()
         answerLabel.translatesAutoresizingMaskIntoConstraints = false
-        answerLabel.text = randomWord() //  hiddenWord
+        answerLabel.text = randomWord()
         answerLabel.font = UIFont.systemFont(ofSize: 32)
         view.addSubview(answerLabel)
         
+        // view for the alphabet buttons
         let letterButtonsView = UIView()
         letterButtonsView.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(letterButtonsView)
         
+        // line images are for the gallons
         let lineImage = UIImageView(frame: CGRect(x: 100, y: 170, width: 9, height: 300))
         lineImage.backgroundColor = UIColor.black
         lineImage.translatesAutoresizingMaskIntoConstraints = false
@@ -74,25 +68,18 @@ class ViewController: UIViewController {
         lineImage4.translatesAutoresizingMaskIntoConstraints = false
         view.addSubview(lineImage4)
         
-        mistakesLabel = UILabel()
-        mistakesLabel.translatesAutoresizingMaskIntoConstraints = false
-        mistakesLabel.text = "Amount of tries left: 7"
-        view.addSubview(mistakesLabel)
-        
         drowLine(startX: 106, toEndingX: 152, startingY: 220, toEndingY: 176)
         
         
         NSLayoutConstraint.activate([
-            answerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 55),
+            answerLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 35),
             answerLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
       
             letterButtonsView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             letterButtonsView.bottomAnchor.constraint(equalTo: view.layoutMarginsGuide.bottomAnchor, constant: 0),
             letterButtonsView.widthAnchor.constraint(equalTo: view.layoutMarginsGuide.widthAnchor, multiplier: 1),
             letterButtonsView.heightAnchor.constraint(equalTo: view.layoutMarginsGuide.heightAnchor, multiplier: 0.4),
-            
-            mistakesLabel.topAnchor.constraint(equalTo: view.layoutMarginsGuide.topAnchor, constant: 15),
-            mistakesLabel.rightAnchor.constraint(equalTo: view.layoutMarginsGuide.rightAnchor, constant: 0)
+  
         ])
         
         // Create 26 letter buttons
@@ -125,27 +112,23 @@ class ViewController: UIViewController {
         letterButtonsView.addSubview(letter)
         letter.addTarget(self, action: #selector(letterTapped), for: .touchUpInside)
         
-//        answerLabel.backgroundColor = UIColor.red
-//        letterButtonsView.backgroundColor = UIColor.green
-//        image.backgroundColor = UIColor.blue
-
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
-        //nameTheButtons()
         loadGame()
     
     }
 
     func randomWord() -> String {
+        // get a random word from the array of all the words
         wordToGuess = wordsToSolve.randomElement()!
+        // store it for the future use
         hiddenWord = wordToGuess
+        // remove all charaters, but keep the capacity
         hiddenWord.removeAll(keepingCapacity: true)
         
-        print(wordToGuess)
-        // hide the word
+        // add same amount of "?" as the random word has characters
         for _ in 0..<wordToGuess.count {
             hiddenWord.append("?")
         }
@@ -177,26 +160,28 @@ class ViewController: UIViewController {
                 // modify the label text to be up to date
                 // consider adding property observer instead of this line
                 answerLabel.text = hiddenWord
+                // hide the button that was tapped
                 sender.isHidden = true
                 
             }
-            
+            // if word is guessed, show alert and load new game
             if !hiddenWord.contains("?") {
                 let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: .alert)
-                alert.addAction(UIAlertAction(title: "I want more!", style: .default, handler: { [weak self] action in
+                alert.addAction(UIAlertAction(title: "I want to play more!", style: .default, handler: { [weak self] action in
                     self?.loadGame()
                 }))
                 present(alert, animated: true)
             }
         }
-        
+        // if wrong letter was pressed
         if !wordToGuess.contains(buttonTitle) {
-           
+            // decrease the score by 1
             tryiesAmount -= 1
+            // call the function to check the score, and add apripriate images to the view
             scoreCheck()
-          
+            // hide the button
             sender.isHidden = true
-            
+            // if all the attemps were used by the user, show alert and load new game
             if tryiesAmount <= 1 {
                 
                 let alert = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
@@ -212,11 +197,11 @@ class ViewController: UIViewController {
     }
     
     func nameTheButtons() {
-        
+        // show all the buttons on the view
         for btn in letterButtons {
             btn.isHidden = false
         }
-        
+        // name the buttons
         for button in 0..<letterButtons.count {
             letterButtons[button].setTitle(alphabet[button], for: .normal)
         }
@@ -224,8 +209,9 @@ class ViewController: UIViewController {
     }
     
     func scoreCheck() {
-        
+        // depending on the amount of attems user have left, add respective image
         switch tryiesAmount {
+        // drow a head
         case 6:
             let circlePath = UIBezierPath(arcCenter: CGPoint(x: 263,y: 222), radius: CGFloat(24), startAngle: CGFloat(0), endAngle:CGFloat(Double.pi * 2), clockwise: true)
             
@@ -240,14 +226,19 @@ class ViewController: UIViewController {
                     shapeLayer.lineWidth = 4.0
             
                 view.layer.addSublayer(shapeLayer)
+        // drow body line
         case 5:
             drowLine(startX: 261, toEndingX: 261, startingY: 244, toEndingY: 344)
+        // drow left hand
         case 4:
             drowLine(startX: 261, toEndingX: 231, startingY: 265, toEndingY: 310)
+        // drow right hand
         case 3:
             drowLine(startX: 262, toEndingX: 295, startingY: 265, toEndingY: 310)
+        // drow left leg
         case 2:
             drowLine(startX: 261, toEndingX: 235, startingY: 343, toEndingY: 425)
+        // drow right leg
         case 1:
             drowLine(startX: 262, toEndingX: 291, startingY: 343, toEndingY: 425)
         default:
@@ -278,10 +269,27 @@ class ViewController: UIViewController {
         answerLabel.text = randomWord()
         
         print(view.layer.sublayers!.count)
-        
-        if view.layer.sublayers!.count > 8 {
+        // depending on the amont of drowings added, remove the from the view
+        if view.layer.sublayers!.count > 7 {
             let allSubs = view.layer.sublayers
-            view.layer.sublayers = allSubs?.dropLast(6)
+            let amountOfLayersToRemove = view.layer.sublayers!.count
+            switch amountOfLayersToRemove {
+            case 8:
+                view.layer.sublayers = allSubs?.dropLast(1)
+            case 9:
+                view.layer.sublayers = allSubs?.dropLast(2)
+            case 10:
+                view.layer.sublayers = allSubs?.dropLast(3)
+            case 11:
+                view.layer.sublayers = allSubs?.dropLast(4)
+            case 12:
+                view.layer.sublayers = allSubs?.dropLast(5)
+            case 13:
+                view.layer.sublayers = allSubs?.dropLast(6)
+            default:
+                print("Do nothing")
+            }
+           
         }
         
         print(view.layer.sublayers!.count)
