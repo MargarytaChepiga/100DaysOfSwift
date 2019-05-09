@@ -178,6 +178,15 @@ class ViewController: UIViewController {
                 // consider adding property observer instead of this line
                 answerLabel.text = hiddenWord
                 sender.isHidden = true
+                
+            }
+            
+            if !hiddenWord.contains("?") {
+                let alert = UIAlertController(title: "You won!", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "I want more!", style: .default, handler: { [weak self] action in
+                    self?.loadGame()
+                }))
+                present(alert, animated: true)
             }
         }
         
@@ -190,11 +199,12 @@ class ViewController: UIViewController {
             
             if tryiesAmount <= 1 {
                 
-                let ac = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
-                ac.addAction(UIAlertAction(title: "Try Again!", style: .cancel, handler: nil))
-                present(ac, animated: true)
-                
-                loadGame()
+                let alert = UIAlertController(title: "Game Over", message: nil, preferredStyle: .alert)
+                alert.addAction(UIAlertAction(title: "Try Again!", style: .cancel, handler: { [weak self ] action in
+                    self?.loadGame()
+                }))
+                present(alert, animated: true)
+ 
             }
             
         }
