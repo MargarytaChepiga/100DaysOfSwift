@@ -1,4 +1,4 @@
-# Hangman 
+# Swifty Words 
 
 XCode 10 - Swift 4
 
