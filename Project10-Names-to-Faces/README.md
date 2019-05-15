@@ -16,11 +16,9 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-15 at 11 38 44 AM](https://user-images.githubusercontent.com/15698572/57789246-82d4bd00-7706-11e9-9c55-d99429f08c09.png)![Screen Shot 2019-05-15 at 11 39 00 AM](https://user-images.githubusercontent.com/15698572/57789336-b44d8880-7706-11e9-8089-8efd14a40e00.png)
 
-![Screen Shot 2019-05-15 at 11 39 00 AM](https://user-images.githubusercontent.com/15698572/57789336-b44d8880-7706-11e9-8089-8efd14a40e00.png)![Screen Shot 2019-05-15 at 11 45 43 AM](https://user-images.githubusercontent.com/15698572/57789940-d98ec680-7707-11e9-9518-01310791f27f.png)
+![Screen Shot 2019-05-15 at 11 45 43 AM](https://user-images.githubusercontent.com/15698572/57789940-d98ec680-7707-11e9-9518-01310791f27f.png)![Screen Shot 2019-05-15 at 11 46 37 AM](https://user-images.githubusercontent.com/15698572/57789963-df84a780-7707-11e9-9cde-7327a31958e0.png)
 
-![Screen Shot 2019-05-15 at 11 46 37 AM](https://user-images.githubusercontent.com/15698572/57789963-df84a780-7707-11e9-9cde-7327a31958e0.png)![Screen Shot 2019-05-15 at 11 46 46 AM](https://user-images.githubusercontent.com/15698572/57789992-e8757900-7707-11e9-8527-db3fde9bb044.png)
-
-![Screen Shot 2019-05-15 at 11 48 30 AM](https://user-images.githubusercontent.com/15698572/57790015-ef9c8700-7707-11e9-84ac-f48c812fa392.png)
+![Screen Shot 2019-05-15 at 11 46 46 AM](https://user-images.githubusercontent.com/15698572/57789992-e8757900-7707-11e9-8527-db3fde9bb044.png)![Screen Shot 2019-05-15 at 11 48 30 AM](https://user-images.githubusercontent.com/15698572/57790015-ef9c8700-7707-11e9-84ac-f48c812fa392.png)
 
 
 
