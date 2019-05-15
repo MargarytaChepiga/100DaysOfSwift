@@ -21,6 +21,17 @@ class GameScene: SKScene {
         // add node to the current screen
         addChild(background)
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
+        
+        makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
+        makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
+        makeSlot(at: CGPoint(x: 640, y: 0), isGood: true)
+        makeSlot(at: CGPoint(x: 896, y: 0), isGood: false)
+        
+        makeBouncer(at: CGPoint(x: 0, y: 0))
+        makeBouncer(at: CGPoint(x: 256, y: 0))
+        makeBouncer(at: CGPoint(x: 512, y: 0))
+        makeBouncer(at: CGPoint(x: 768, y: 0))
+        makeBouncer(at: CGPoint(x: 1024, y: 0))
     }
     
     // This method gets called (in UIKit and SpriteKit) whenever someone starts touching their device
@@ -31,14 +42,35 @@ class GameScene: SKScene {
             // use its location(in:) method to find out where the screen was touched in relation to self
             // UITouch is a UIKit class that is also used in SpriteKit, and provides information about a touch such as its position and when it happened
             let location = touch.location(in: self)
-            // generates a node filled with a color (red) at a size (64x64)
-            let box = SKSpriteNode(color: UIColor.red, size: CGSize(width: 64, height: 64))
-            box.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 64, height: 64))
-            // The code sets the new box's position to be where the tap happened
-            box.position = location
-            // then adds it to the scene
-            addChild(box)
+            let ball = SKSpriteNode(imageNamed: "ballRed")
+            ball.physicsBody = SKPhysicsBody(circleOfRadius: ball.size.width / 2.0)
+            ball.physicsBody?.restitution = 0.4
+            ball.position = location
+            addChild(ball)
         }
+    }
+    
+    func makeBouncer(at position: CGPoint) {
+        let bouncer = SKSpriteNode(imageNamed: "bouncer")
+        // centered horizontally on the bottom edge of the scene
+        bouncer.position = position
+        bouncer.physicsBody = SKPhysicsBody(circleOfRadius: bouncer.size.width / 2.0)
+        // When this is true, the object will be moved by the physics simulator based on gravity and collisions. When it's false (as we're setting it) the object will still collide with other things, but it won't ever be moved as a result
+        bouncer.physicsBody?.isDynamic = false
+        addChild(bouncer)
+    }
+    
+    func makeSlot(at position: CGPoint, isGood: Bool) {
+        var slotBase: SKSpriteNode
+        
+        if isGood {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseGood")
+        } else {
+            slotBase = SKSpriteNode(imageNamed: "slotBaseBad")
+        }
+        
+        slotBase.position = position
+        addChild(slotBase)
     }
     
 }
