@@ -20,9 +20,9 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-15 at 11 46 37 AM](https://user-images.githubusercontent.com/15698572/57789963-df84a780-7707-11e9-9cde-7327a31958e0.png)![Screen Shot 2019-05-15 at 11 46 46 AM](https://user-images.githubusercontent.com/15698572/57789992-e8757900-7707-11e9-8527-db3fde9bb044.png)
 
-![Screen Shot 2019-05-15 at 11 48 30 AM](https://user-images.githubusercontent.com/15698572/57790015-ef9c8700-7707-11e9-84ac-f48c812fa392.png)
+![Screen Shot 2019-05-15 at 11 48 30 AM](https://user-images.githubusercontent.com/15698572/57790015-ef9c8700-7707-11e9-84ac-f48c812fa392.png)![Screen Shot 2019-05-15 at 11 57 37 AM](https://user-images.githubusercontent.com/15698572/57790637-27f09500-7709-11e9-9337-3c41c534cf29.png)
 
-
+![Screen Shot 2019-05-15 at 11 58 41 AM](https://user-images.githubusercontent.com/15698572/57790660-350d8400-7709-11e9-8ea9-ce77f7018655.png)
 
 #### Gif
 
