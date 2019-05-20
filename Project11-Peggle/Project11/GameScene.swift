@@ -7,7 +7,6 @@
 //
 
 import SpriteKit
-import UIKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
