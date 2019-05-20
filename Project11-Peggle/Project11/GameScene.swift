@@ -7,6 +7,7 @@
 //
 
 import SpriteKit
+import UIKit
 
 class GameScene: SKScene, SKPhysicsContactDelegate {
     
@@ -38,9 +39,11 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         }
     }
     
+    var alertLabel: SKLabelNode!
+    
     // equivalent of SpriteKit's viewDidLoad() method
     override func didMove(to view: SKView) {
-        
+   
         let background = SKSpriteNode(imageNamed: "background.jpg")
         background.position = CGPoint(x: 512, y: 384)
         // just draw it, ignoring any alpha values
@@ -53,7 +56,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         physicsBody = SKPhysicsBody(edgeLoopFrom: frame)
         
         physicsWorld.contactDelegate = self
-
+        
         makeSlot(at: CGPoint(x: 128, y: 0), isGood: true)
         makeSlot(at: CGPoint(x: 384, y: 0), isGood: false)
         makeSlot(at: CGPoint(x: 640, y: 0), isGood: true)
@@ -78,8 +81,9 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         
         limitLabel = SKLabelNode(fontNamed: "Chalkduster")
         limitLabel.text = "Balls left: 5"
-        limitLabel.position = CGPoint(x: 250, y: 700)
+        limitLabel.position = CGPoint(x: 260, y: 700)
         addChild(limitLabel)
+        
         
     }
     
@@ -93,6 +97,19 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             let location = touch.location(in: self)
             
             let objects = nodes(at: location)
+        
+            // remove "Game Over" label
+            if limitBalls == 0 {
+                if let labelNode = childNode(withName: "label") {
+                    
+                    labelNode.removeFromParent()
+                    // reset the score and limitBalls
+                    score = 0
+                    limitBalls = 5
+                    
+                }
+            }
+            
             
             if objects.contains(editLabel) {
                 editingMode.toggle()
@@ -100,10 +117,29 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
                 if editingMode {
                     createBox(in: location)
                 } else {
-                    if limitBalls <= 5 && limitBalls > 0 {
+                    if limitBalls >= 1 {
+                        
                         createBall(in: location)
                         limitBalls -= 1
+                        
                     }
+                    if limitBalls < 1 {
+                        
+                        alertLabel = SKLabelNode(fontNamed: "Chalkduster")
+                        alertLabel.text = "Game Over!"
+                        alertLabel.name = "label"
+                        alertLabel.position = CGPoint(x: 520, y: 450)
+                        addChild(alertLabel)
+                        // remove all the boxes
+                        while (childNode(withName: "box") != nil) {
+                            if let box = childNode(withName: "box") {
+                                box.removeFromParent()
+                            }
+                        }
+                        
+                        
+                    }
+
                 }
             }
             
@@ -157,12 +193,16 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
             destroy(ball: ball)
             score += 1
             limitBalls += 1
+            print("GOOD ")
         } else if object.name == "bad" {
             destroy(ball: ball)
             score -= 1
+            print("Bad ")
+            
         } else if object.name == "box" {
             destroy(ball: object)
         }
+      
     }
     
     // called when we're finished with the ball and want to get rid of it
@@ -187,6 +227,7 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         } else if nodeB.name == "ball" {
             collisionBetween(ball: nodeB, object: nodeA)
         }
+ 
     }
     
     func createBall(in location: CGPoint) {
@@ -223,6 +264,5 @@ class GameScene: SKScene, SKPhysicsContactDelegate {
         addChild(box)
         
     }
-    
     
 }
