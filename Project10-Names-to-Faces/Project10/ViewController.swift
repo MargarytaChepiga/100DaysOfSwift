@@ -16,6 +16,16 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
+        let defaults = UserDefaults.standard
+        
+        // This code is effectively the save() method in reverse
+        // use the object(forKey:) method to pull out an optional Data, using if let and as? to unwrap it
+        if let savedPeople = defaults.object(forKey: "people") as? Data {
+            // give that to the unarchiveTopLevelObjectWithData() method of NSKeyedUnarchiver to convert it back to an object graph – i.e., our array of Person objects
+            if let decodedPeople = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(savedPeople) as? [Person] {
+                people = decodedPeople
+            }
+        }
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(addNewPerson))
         
@@ -52,7 +62,6 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         let picker = UIImagePickerController()
         // allows the user to crop the picture they select
         picker.allowsEditing = true
-        print("HERE  ")
         print(UIImagePickerController.isSourceTypeAvailable(.camera))
         if UIImagePickerController.isSourceTypeAvailable(.camera) == true {
             picker.sourceType = .camera
@@ -82,7 +91,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         collectionView.reloadData()
         
         dismiss(animated: true)
-        
+        save()
     }
     
     func getDocumentsDirectory() -> URL {
@@ -103,6 +112,7 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
             person.name = newName
             
             self?.collectionView.reloadData()
+            self?.save()
             
         })
         renameAlert.addAction(UIAlertAction(title: "Cancel", style: .default))
@@ -118,6 +128,16 @@ class ViewController: UICollectionViewController, UIImagePickerControllerDelegat
         }))
         
         present(alert, animated: true)
+    }
+    
+    func save() {
+        // converts our array into a Data object
+        if let savedData = try? NSKeyedArchiver.archivedData(withRootObject: people, requiringSecureCoding: false) {
+            // save that data object to UserDefaults
+            let defaults = UserDefaults.standard
+            defaults.set(savedData, forKey: "people")
+        }
+        
     }
 
 }
