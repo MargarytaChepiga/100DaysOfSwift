@@ -37,7 +37,20 @@ class ViewController: UITableViewController {
             allWords = ["silkworm"]
         }
         
-        startGame()
+        title = UserDefaults.standard.object(forKey: "currentWord") as? String ?? ""
+        
+        if let data = UserDefaults.standard.object(forKey: "words") as? Data {
+            if let words = try? NSKeyedUnarchiver.unarchiveTopLevelObjectWithData(data) as? [String] ?? [String]() {
+                usedWords = words
+                if usedWords.count > 0 {
+                    self.tableView.reloadData()
+                }
+            }
+        } else {
+            startGame()
+        }
+        
+        //startGame()
     }
     
     @objc func startGame() {
@@ -47,6 +60,8 @@ class ViewController: UITableViewController {
         usedWords.removeAll(keepingCapacity: true)
         // table view is given to us as a property because our ViewController class comes from UITableViewController, and calling reloadData() forces it to call numberOfRowsInSection again, as well as calling cellForRowAt repeatedly. The method allows us to check we've loaded all the data correctly
         tableView.reloadData()
+        
+        UserDefaults.standard.set(title, forKey: "currentWord")
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -92,7 +107,7 @@ class ViewController: UITableViewController {
                     // we insert the answer to the usedWords array at position 0
                     // to appear at the top of the table view
                     usedWords.insert(lowerAnswer, at: 0)
-                    
+                    save()
                     // inser a new row into a table view
                     let indexPath = IndexPath(row: 0, section: 0)
                     // use insertRows method to animate the new cell appear
@@ -157,6 +172,12 @@ class ViewController: UITableViewController {
         let ac = UIAlertController(title: errTitle, message: errMessage, preferredStyle: .alert)
         ac.addAction(UIAlertAction(title: "OK!", style: .default))
         present(ac, animated: true)
+    }
+    
+    func save() {
+        if let data = try? NSKeyedArchiver.archivedData(withRootObject: usedWords, requiringSecureCoding: false) {
+            UserDefaults.standard.set(data, forKey: "words")
+        }
     }
 }
 
