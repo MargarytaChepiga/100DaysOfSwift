@@ -23,7 +23,12 @@ class DetailViewController: UIViewController {
         
         navigationItem.largeTitleDisplayMode = .never
 
-
+        let defaults = UserDefaults.standard
+        var count: Int = defaults.integer(forKey: selectedImage!)
+        count += 1
+        defaults.set(count, forKey: selectedImage!)
+        print(defaults.integer(forKey: selectedImage!))
+        
         // Do any additional setup after loading the view.
         if let imageToLoad = selectedImage {
             imageView.image = UIImage(named: imageToLoad)
