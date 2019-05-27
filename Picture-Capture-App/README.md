@@ -8,7 +8,10 @@ This application is created to demonstrate the knowledge of:
 
 - UIKit
 - UITableView
-
+- UIImagePickerController
+- UUID
+- NSCoding
+- UserDefaults
 
 #### Screenshots
 
