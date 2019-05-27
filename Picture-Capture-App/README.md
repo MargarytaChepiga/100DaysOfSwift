@@ -20,8 +20,7 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-27 at 3 02 05 PM](https://user-images.githubusercontent.com/15698572/58435853-a39afc00-8090-11e9-8f52-a442eb9db519.png)![Screen Shot 2019-05-27 at 3 03 17 PM](https://user-images.githubusercontent.com/15698572/58435855-a8f84680-8090-11e9-8b43-a7899b25d9e6.png)
 
-![Screen Shot 2019-05-27 at 3 16 00 PM](https://user-images.githubusercontent.com/15698572/58436285-9252ef00-8092-11e9-978b-278ea8c31a05.png)![Screen Shot 2019-05-27 at 3 19 44 PM](https://user-images.githubusercontent.com/15698572/58436432-4f454b80-8093-11e9-8630-3779e2569eea.png)
-
+![Screen Shot 2019-05-27 at 3 16 00 PM](https://user-images.githubusercontent.com/15698572/58436285-9252ef00-8092-11e9-978b-278ea8c31a05.png)![Screen Shot 2019-05-27 at 3 02 05 PM](https://user-images.githubusercontent.com/15698572/58437377-b107b480-8097-11e9-8d6b-945d81f20b61.png)
 
 
 
