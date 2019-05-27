@@ -22,9 +22,11 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-27 at 3 16 00 PM](https://user-images.githubusercontent.com/15698572/58436285-9252ef00-8092-11e9-978b-278ea8c31a05.png)![Screen Shot 2019-05-27 at 3 02 05 PM](https://user-images.githubusercontent.com/15698572/58437377-b107b480-8097-11e9-8d6b-945d81f20b61.png)
 
+![Screen Shot 2019-05-27 at 3 03 17 PM](https://user-images.githubusercontent.com/15698572/58435855-a8f84680-8090-11e9-8b43-a7899b25d9e6.png)![Screen Shot 2019-05-27 at 3 16 13 PM](https://user-images.githubusercontent.com/15698572/58437433-ec09e800-8097-11e9-874e-302534b8832a.png)
 
+![Screen Shot 2019-05-27 at 3 19 36 PM](https://user-images.githubusercontent.com/15698572/58437454-0e036a80-8098-11e9-95ef-4f4967dce302.png)![Screen Shot 2019-05-27 at 3 19 44 PM](https://user-images.githubusercontent.com/15698572/58437467-178cd280-8098-11e9-96d8-a45b8a0947bd.png)
 
-
+![Screen Shot 2019-05-27 at 3 57 58 PM](https://user-images.githubusercontent.com/15698572/58437720-3cce1080-8099-11e9-9830-128eca4fba46.png)![Screen Shot 2019-05-27 at 3 58 06 PM](https://user-images.githubusercontent.com/15698572/58437727-42c3f180-8099-11e9-8491-d9bbcb3b57dd.png)
 
 #### Gif
 
