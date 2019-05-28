@@ -24,8 +24,9 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-28 at 5 04 02 PM](https://user-images.githubusercontent.com/15698572/58512417-095bb680-816b-11e9-83e6-13fa505b78c0.png)![Screen Shot 2019-05-28 at 5 06 22 PM](https://user-images.githubusercontent.com/15698572/58512430-11b3f180-816b-11e9-8548-2609204f0cc5.png)
 
+![Screen Shot 2019-05-28 at 6 01 56 PM](https://user-images.githubusercontent.com/15698572/58515879-3e203b80-8174-11e9-8803-0a9c6ddb60e1.png)![Screen Shot 2019-05-28 at 6 02 05 PM](https://user-images.githubusercontent.com/15698572/58515893-44aeb300-8174-11e9-8018-4c724fa1d5d3.png)
 
-
+![Screen Shot 2019-05-28 at 6 02 16 PM](https://user-images.githubusercontent.com/15698572/58515903-4b3d2a80-8174-11e9-8434-71649d4df7d8.png)![Screen Shot 2019-05-28 at 6 17 41 PM](https://user-images.githubusercontent.com/15698572/58516127-fb129800-8174-11e9-9bfe-7f39ca410dd4.png)
 
 #### Gif
 
