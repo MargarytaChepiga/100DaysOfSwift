@@ -22,6 +22,8 @@ This application is created to demonstrate the knowledge of:
 
 ![Screen Shot 2019-05-28 at 5 02 38 PM](https://user-images.githubusercontent.com/15698572/58512285-b8e45900-816a-11e9-853d-08ba83c44c85.png)![Screen Shot 2019-05-28 at 5 03 49 PM](https://user-images.githubusercontent.com/15698572/58512297-be41a380-816a-11e9-9538-f2440841fd1d.png)
 
+![Screen Shot 2019-05-28 at 5 04 02 PM](https://user-images.githubusercontent.com/15698572/58512417-095bb680-816b-11e9-83e6-13fa505b78c0.png)![Screen Shot 2019-05-28 at 5 06 22 PM](https://user-images.githubusercontent.com/15698572/58512430-11b3f180-816b-11e9-8548-2609204f0cc5.png)
+
 
 
 
