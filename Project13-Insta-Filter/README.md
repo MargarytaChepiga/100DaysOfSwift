@@ -23,3 +23,7 @@ Use Case #1: Add an image
 Use Case #2: Use filter
 
 ![May-28-2019 16-37-46](https://user-images.githubusercontent.com/15698572/58510563-019a1300-8167-11e9-835b-a288f46a3dad.gif)
+
+Use Case #3: Save image
+
+![May-28-2019 16-51-08](https://user-images.githubusercontent.com/15698572/58511476-e16b5380-8168-11e9-9092-3e58499f94e4.gif)
