@@ -189,7 +189,11 @@ class ViewController: UIViewController {
         // activatedButtons array is being used to hold all buttons that the player has tapped before submitting their answer
         activatedButtons.append(sender)
         // hide the button that was tapped
-        sender.isHidden = true
+        UIView.animate(withDuration: 1, delay: 0, options: [], animations: {
+           sender.alpha = 0
+        }) { finished in
+         sender.isHidden = true
+        }
         
     }
     
