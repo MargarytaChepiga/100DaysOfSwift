@@ -66,6 +66,13 @@ class ViewController: UIViewController {
     @IBAction func buttonTapped(_ sender: UIButton) {
         var title: String
         
+        UIView.animate(withDuration: 1, delay: 0, usingSpringWithDamping: 0.5, initialSpringVelocity: 5, options: [], animations: {
+            // closure we don’t need to use [weak self] because there’s no risk of strong reference cycles here – the closures passed to animate(withDuration:) method will be used once then thrown away
+            sender.transform = CGAffineTransform(scaleX: 0.4, y: 0.4)
+            sender.transform = CGAffineTransform(scaleX: 1, y: 1)
+        }) { finished in    //We use trailing closure syntax to provide our completion closure. This will be called when the animation completes, and its finished value will be true if the animations completed fully
+        }
+        
         // keep track of correct & wrong answers
         if sender.tag == correctAnswer {
             title = "Correct"
