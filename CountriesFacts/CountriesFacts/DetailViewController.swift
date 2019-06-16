@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SVGKit
 
 class DetailViewController: UITableViewController {
 
@@ -22,10 +23,17 @@ class DetailViewController: UITableViewController {
         
         title = detailItem.name
         
+        let svgToImage = SVGKImage(contentsOf: URL(string: detailItem.flag))
+        flag.image = svgToImage?.uiImage
         
         dataToLoad.append("Capital: \(detailItem.capital)")
         dataToLoad.append("Region: \(detailItem.region)")
         dataToLoad.append("Population: \(detailItem.population)")
+        dataToLoad.append("Area: \(detailItem.area ?? 0.0) ")
+        dataToLoad.append("Native Name: \(detailItem.nativeName)")
+        dataToLoad.append("Currency: \(detailItem.currencies[0].name ?? "not available") with symbol \(detailItem.currencies[0].symbol ?? "not availbale")")
+        dataToLoad.append("Language: \(detailItem.languages[0].name)")
+        
         
     }
     
